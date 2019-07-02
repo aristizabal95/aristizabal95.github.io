@@ -219,3 +219,18 @@ blockquote:before {
 .cms-editor-active .editor-link {
 	display: block;
 }
+
+.subtitle {
+	margin-bottom: 10em;
+
+	& h2 {
+		vertical-align: middle;
+		text-align: center;
+		border-bottom: 2px solid rgba(0,0,0,0.4);
+		line-height: 0.1em;
+	}
+	& span {
+		background: #fff;
+		padding: 0 20px;
+	}
+}
