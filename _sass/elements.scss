@@ -44,6 +44,7 @@ h2 {
 
 h3 {
 	margin: 20px 0 10px 0;
+	font-size: 1.5em;
 }
 
 h2 a {
@@ -60,4 +61,12 @@ p, address, ul {
 	font-weight: 300;
 	line-height: 1.6em;
 	font-family: 'Lato', sans-serif;
+}
+
+li {
+	list-style: none;
+	& i {
+		color: #6dc36d;
+		padding-right: .3em;
+	}
 }
