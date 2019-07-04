@@ -65,30 +65,34 @@ bottom_image: https://unsplash.it/2000/1322?a=.png
 					<li><i class="fa fa-circle"></i>Tensorflow</li>
 					<li><i class="fa fa-circle"></i>Pytorch</li>
 					<li><i class="fa fa-circle"></i>Pysyft</li>
+					<li><i class="fa fa-circle"></i>C</li>
 				</ul>
 			</div>
 			<div class="text">
 				<ul>
-					<li><i class="fa fa-circle"></i>C</li>
 					<li><i class="fa fa-circle"></i>Ruby</li>
 					<li><i class="fa fa-circle"></i>Ruby on Rails</li>
 					<li><i class="fa fa-circle"></i>Devise</li>
-				</ul>
-			</div>
-			<div class="text">
-				<ul>
 					<li><i class="fa fa-circle"></i>HTML</li>
 					<li><i class="fa fa-circle"></i>CSS</li>
-					<li><i class="fa fa-circle"></i>Javascript</li>
-					<li><i class="fa fa-circle"></i>JQuery</li>
 				</ul>
 			</div>
 			<div class="text">
 				<ul>
+					<li><i class="fa fa-circle"></i>Javascript</li>
+					<li><i class="fa fa-circle"></i>JQuery</li>
 					<li><i class="fa fa-circle"></i>Git</li>
 					<li><i class="fa fa-circle"></i>Slack</li>
 					<li><i class="fa fa-circle"></i>Asana</li>
-					<li><i class="fa fa-circle"></i>Terminal</li>
+				</ul>
+			</div>
+			<div class="text">
+				<ul>
+					<li><i class="fa fa-circle"></i>Arduino</li>
+					<li><i class="fa fa-circle"></i>Processing</li>
+					<li><i class="fa fa-circle"></i>Pro Tools</li>
+					<li><i class="fa fa-circle"></i>Pure Data</li>
+					<li><i class="fa fa-circle"></i>Logic Pro</li>
 				</ul>
 			</div>
 		</div>
@@ -120,8 +124,8 @@ bottom_image: https://unsplash.it/2000/1322?a=.png
 			<div class="text">
 				<i class="main-icon fas fa-graduation-cap"></i>
 				<h2 class="editable">Música autómata</h2>
-					<p class="editable"><b>Roles:</b>Developer</p>
-					<p class="editable"><b>Tools: </b>Python, Tensorflow, Pure Data</p>
+				<p class="editable"><b>Roles:</b>Developer</p>
+				<p class="editable"><b>Tools: </b>Python, Tensorflow, Pure Data</p>
 				<p class="editable"><i>Música Autómata</i> is an interactive music project, were the computer generates sound according to the listener's facil gestures. The computer's objective is to maximize an emotion on the listener through music.</p>
 			</div>
 		</div>
@@ -152,25 +156,36 @@ bottom_image: https://unsplash.it/2000/1322?a=.png
 
 	<!--
 	<section class="info">
-		<div class="container flex">
-			<div class="text">
-				<h2 class="editable">Swipe and go</h2>
-				<p class="editable">Frisco shows you cards with people who might be a good match for friendship. Swipe left to move to the next card or right to start talking.</p>
-			</div>
-			<div class="image">
-				<img class="editable" src="http://placehold.it/650x1300" alt="Screenshot" />
-			</div>
-		</div>
-	</section>
-	-->
-
-	<section class="hero" style="background-image: url({% include relative-src.html src=page.bottom_image %}); margin-top: 7em;">
-		<div class="inner-hero text-container">
-			<div class="hero-text-container">
-				<h2 class="editable">Find your buddy today</h2>
-				<p class="subtext editable">It's free, fun and an exciting way to meet new people.</p>
-				<div class="cta button alt"><a href="#">Join Now</a></div>
-			</div>
-		</div>
-	</section>
+	<div class="container flex">
+	<div class="text">
+	<h2 class="editable">Swipe and go</h2>
+	<p class="editable">Frisco shows you cards with people who might be a good match for friendship. Swipe left to move to the next card or right to start talking.</p>
 </div>
+<div class="image">
+<img class="editable" src="http://placehold.it/650x1300" alt="Screenshot" />
+</div>
+</div>
+</section>
+-->
+
+<section id="animated" class="hero" style="margin-top: 7em;">
+	<div class="inner-hero text-container">
+		<div class="hero-text-container">
+			<h2 class="editable">Let's get in touch!</h2>
+			<p class="subtext editable">If you think I can be of any help, or are interested in my work, contact me.</p>
+			<div class="cta button alt"><a href="/contact">Contact Now</a></div>
+		</div>
+	</div>
+</section>
+</div>
+<script src="/js/dist/three.min.js"></script>
+<script src="/js/dist/vanta.net.min.js"></script>
+<script>
+VANTA.NET({
+  el: "#animated",
+  color: 0x659d,
+  backgroundColor: 0xa1f31,
+  points: 20.00,
+  maxDistance: 15.00,
+	spacing: 18
+})</script>
