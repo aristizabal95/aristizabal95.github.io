@@ -237,7 +237,8 @@ blockquote:before {
 }
 
 .thumbnail {
-	width: 11em;
+	max-height: 11em;
+	min-height: 4em;
 }
 
 .transparent {
