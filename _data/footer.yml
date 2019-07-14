@@ -1,27 +1,18 @@
 left_links:
-  - name: Blog
-    link: /blog/
-  - name: About
-    link: /about/
+  # - name: Blog
+  #   link: /blog/
   - name: Contact
     link: /contact/
 right_links:
   - name:
-    link: https://facebook.com/cloudcannon
+    link: https://facebook.com/aristizabal95
     new_window: true
     social_icon: Facebook
   - name:
-    link: https://twitter.com/cloudcannon
-    social_icon: Twitter
+    link: https://www.linkedin.com/in/aristizabal95/
+    social_icon: LinkedIn
     new_window: true
   - name:
-    link: https://youtube.com/c/cloudcannon
-    social_icon: YouTube
+    link: https://github.com/aristizabal95
+    social_icon: Github
     new_window: true
-  - name:
-    link: https://instagram.com/
-    social_icon: Instagram
-    new_window: true
-  - name:
-    link: /feed.xml
-    social_icon: RSS
