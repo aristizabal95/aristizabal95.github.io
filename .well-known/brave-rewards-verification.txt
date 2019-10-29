@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: aristizabal95.github.io
+Token: 2572974b0deb2cf8888017a82227b7008584addc9d8991f5bbdeeaf32d0f95f8
