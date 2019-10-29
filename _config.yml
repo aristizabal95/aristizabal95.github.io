@@ -1,6 +1,8 @@
 # ----
 # Site
 
+include: [".well-known"]
+
 title: Alejandro Aristizábal
 url: "https://aristizabal95.github.io"
 baseurl:
