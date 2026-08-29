@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <style>
+    rect.bg { fill: #faf9f6; }
+    .letter-a { fill: #1a1a1a; }
+    .letter-l { fill: #8a8a8a; }
+    .dot-light { fill: #d4d0c8; }
+    .dot-mid { fill: #8a8a8a; }
+    .dot-dark { fill: #4a4a4a; }
+    @media (prefers-color-scheme: dark) {
+      rect.bg { fill: #151518; }
+      .letter-a { fill: #e4e4e7; }
+      .letter-l { fill: #63636e; }
+      .dot-light { fill: #2e2e35; }
+      .dot-mid { fill: #63636e; }
+      .dot-dark { fill: #a1a1aa; }
+    }
+  </style>
+  <rect class="bg" width="64" height="64" rx="8"/>
+  <text x="32" y="50" font-family="'Courier New', monospace" font-size="44" font-weight="700" text-anchor="middle" letter-spacing="3">
+    <tspan class="letter-a">A</tspan><tspan class="letter-l">λ</tspan>
+  </text>
+  <circle cx="8" cy="8" r="1.2" class="dot-light" opacity="0.6"/>
+  <circle cx="16" cy="6" r="1" class="dot-mid" opacity="0.4"/>
+  <circle cx="52" cy="10" r="1.3" class="dot-dark" opacity="0.3"/>
+  <circle cx="56" cy="56" r="1.1" class="dot-light" opacity="0.5"/>
+  <circle cx="48" cy="58" r="1" class="dot-mid" opacity="0.4"/>
+  <circle cx="10" cy="58" r="1.2" class="dot-dark" opacity="0.25"/>
+</svg>

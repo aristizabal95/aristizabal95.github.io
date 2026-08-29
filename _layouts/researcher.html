@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
     <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-    <link rel="icon" type="image/png" href="{{ site.baseurl }}/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="{{ site.baseurl }}/images/favicon.svg">
+    <link rel="icon" type="image/png" href="{{ site.baseurl }}/images/favicon.png">
+    <link rel="shortcut icon" href="{{ site.baseurl }}/images/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -23,6 +25,35 @@
             --accent:   #7c4d28;
             --serif:    'Libre Baskerville', Georgia, serif;
             --sans:     'Source Sans 3', 'Source Sans Pro', sans-serif;
+            --blur-bg:  rgba(250, 249, 246, 0.5);
+            --blur-panel: rgba(250, 249, 246, 0.92);
+            --blur-border: rgba(0, 0, 0, 0.04);
+            --blur-shadow: rgba(0, 0, 0, 0.03);
+            --ca-ink-r: 26;
+            --ca-ink-g: 26;
+            --ca-ink-b: 26;
+        }
+
+        [data-theme="dark"] {
+            --paper:    #151518;
+            --ink:      #e4e4e7;
+            --ink-mid:  #a1a1aa;
+            --ink-faint:#63636e;
+            --rule:     #2e2e35;
+            --link:     #7db4f5;
+            --link-h:   #a3cbf7;
+            --accent:   #c9946a;
+            --blur-bg:  rgba(21, 21, 24, 0.5);
+            --blur-panel: rgba(21, 21, 24, 0.92);
+            --blur-border: rgba(255, 255, 255, 0.04);
+            --blur-shadow: rgba(0, 0, 0, 0.15);
+            --ca-ink-r: 140;
+            --ca-ink-g: 140;
+            --ca-ink-b: 148;
+        }
+
+        [data-theme="dark"] img.about-photo {
+            filter: grayscale(8%) brightness(0.9);
         }
 
         html { scroll-behavior: smooth; }
@@ -83,6 +114,7 @@
             margin-top: 0.9rem;
             display: flex;
             gap: 1.5rem;
+            align-items: center;
         }
 
         .site-nav a {
@@ -92,6 +124,22 @@
         }
 
         .site-nav a:hover {
+            color: var(--ink);
+        }
+
+        .theme-toggle {
+            margin-left: auto;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--ink-faint);
+            padding: 0;
+            line-height: 1;
+            transition: color 0.15s;
+        }
+
+        .theme-toggle:hover {
             color: var(--ink);
         }
 
@@ -253,18 +301,93 @@
             transform: translateX(-50%);
             width: 760px;
             height: 100%;
-            background: rgba(250, 249, 246, 0.55);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
+            background: var(--blur-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 0;
             pointer-events: none;
-            border-left: 1px solid rgba(0, 0, 0, 0.04);
-            border-right: 1px solid rgba(0, 0, 0, 0.04);
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.03);
+            border-left: 1px solid var(--blur-border);
+            border-right: 1px solid var(--blur-border);
+            box-shadow: 0 0 40px var(--blur-shadow);
         }
 
         @media (max-width: 540px) {
             .content-blur { width: 100%; }
+        }
+
+        /* ── CA CONTROLS ─────────── */
+        .ca-controls {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 10;
+            font-family: var(--sans);
+            font-size: 0.78rem;
+        }
+
+        .ca-controls summary {
+            cursor: pointer;
+            color: var(--ink-faint);
+            font-size: 0.75rem;
+            letter-spacing: 0.03em;
+            list-style: none;
+            text-align: right;
+            user-select: none;
+        }
+
+        .ca-controls summary::-webkit-details-marker { display: none; }
+
+        .ca-controls summary:hover { color: var(--ink-mid); }
+
+        .ca-controls-panel {
+            margin-top: 0.5rem;
+            background: var(--blur-panel);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--rule);
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            width: 240px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .ca-controls-panel label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+            color: var(--ink-mid);
+        }
+
+        .ca-controls-panel input[type="range"] {
+            width: 110px;
+            accent-color: var(--ink-faint);
+        }
+
+        .ca-controls-panel .ca-val {
+            width: 2.5rem;
+            text-align: right;
+            color: var(--ink-faint);
+            font-size: 0.72rem;
+            font-family: monospace;
+        }
+
+        .ca-controls-panel button {
+            margin-top: 0.4rem;
+            width: 100%;
+            padding: 0.3rem;
+            background: var(--paper);
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            color: var(--ink-mid);
+            font-family: var(--sans);
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .ca-controls-panel button:hover {
+            border-color: var(--ink-faint);
+            color: var(--ink);
         }
 
         /* ── RESPONSIVE ──────────── */
@@ -275,6 +398,14 @@
             .writing-date { width: 4.5rem; }
         }
     </style>
+    <script>
+        // Apply theme before render to prevent flash
+        (function() {
+            var saved = localStorage.getItem('theme');
+            var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
 </head>
 <body>
 
@@ -288,6 +419,7 @@
             <a href="#writing">Writing</a>
             <a href="#publications">Publications</a>
             <a href="#connect">Contact</a>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
         </nav>
     </header>
 
@@ -305,6 +437,21 @@
 
 </div>
 
+<details class="ca-controls">
+    <summary>background controls</summary>
+    <div class="ca-controls-panel">
+        <label>diffusion <input type="range" id="ca-du" min="0.05" max="0.6" step="0.01" value="0.25"> <span class="ca-val" id="ca-du-val">0.25</span></label>
+        <label>threshold <input type="range" id="ca-a0" min="-0.2" max="0.3" step="0.01" value="-0.05"> <span class="ca-val" id="ca-a0-val">-0.05</span></label>
+        <label>recovery <input type="range" id="ca-eps" min="0.02" max="0.25" step="0.01" value="0.08"> <span class="ca-val" id="ca-eps-val">0.08</span></label>
+        <label>coupling <input type="range" id="ca-b" min="0.1" max="1.2" step="0.05" value="0.60"> <span class="ca-val" id="ca-b-val">0.60</span></label>
+        <label>noise <input type="range" id="ca-noise" min="0" max="0.06" step="0.002" value="0.015"> <span class="ca-val" id="ca-noise-val">0.015</span></label>
+        <label>intensity <input type="range" id="ca-peak" min="0.05" max="0.6" step="0.01" value="0.20"> <span class="ca-val" id="ca-peak-val">0.20</span></label>
+        <label>fatigue <input type="range" id="ca-fatigue" min="0" max="0.4" step="0.01" value="0.04"> <span class="ca-val" id="ca-fatigue-val">0.04</span></label>
+        <label>fat. decay <input type="range" id="ca-fatigueDecay" min="0.001" max="0.02" step="0.001" value="0.006"> <span class="ca-val" id="ca-fatigueDecay-val">0.006</span></label>
+        <button id="ca-reset">reset defaults</button>
+    </div>
+</details>
+
 <canvas id="ca-bg"></canvas>
 <div class="content-blur"></div>
 
@@ -316,17 +463,22 @@
     const CHAR_SIZE = 14;
     const FONT = CHAR_SIZE + 'px monospace';
     const BASE_ALPHA = 0.04;
-    const PEAK_ALPHA = 0.22;
-    const DAMPING = 0.996;
-    const TICK_MS = 80;
-    const PERTURB_CHANCE = 0.0003;
-    const PERTURB_STRENGTH = 0.8;
+    // peak alpha is controlled by P.peak
+    const TICK_MS = 50;
+    const STEPS_PER_FRAME = 3;
+
+    // FitzHugh-Nagumo excitable medium
+    // Mutable params (controlled by sliders)
+    const DEFAULTS = { Du: 0.25, a0: -0.05, eps: 0.08, b: 0.6, noise: 0.015, peak: 0.20, fatigue: 0.04, fatigueDecay: 0.006 };
+    let P = { ...DEFAULTS };
+
+    const a1 = 2.0;     // reaction strength (fixed)
+    const dt = 0.14;
 
     const GLYPHS = '0123456789ABCDEFabcdef+-=<>{}[]|/\\~:.;!?@#$%^&*';
 
-    let cols, rows, chars;
-    // Wave equation: two buffers for current and previous energy
-    let curr, prev;
+    let cols, rows;
+    let u, v, nextU, nextV, chars, fatigue;
 
     function resize() {
         canvas.width = window.innerWidth;
@@ -334,75 +486,136 @@
         const newCols = Math.ceil(canvas.width / CHAR_SIZE) + 1;
         const newRows = Math.ceil(canvas.height / CHAR_SIZE) + 1;
 
-        const oldCurr = curr;
-        const oldPrev = prev;
-        const oldChars = chars;
-        const oldCols = cols || 0;
-        const oldRows = rows || 0;
+        const oldU = u, oldV = v, oldChars = chars, oldFatigue = fatigue;
+        const oldCols = cols || 0, oldRows = rows || 0;
 
         cols = newCols;
         rows = newRows;
         const size = cols * rows;
 
-        curr = new Float32Array(size);
-        prev = new Float32Array(size);
+        u = new Float32Array(size);
+        v = new Float32Array(size);
+        nextU = new Float32Array(size);
+        nextV = new Float32Array(size);
         chars = new Uint8Array(size);
+        fatigue = new Float32Array(size);
 
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
                 const i = r * cols + c;
-                if (oldCurr && r < oldRows && c < oldCols) {
+                if (oldU && r < oldRows && c < oldCols) {
                     const oi = r * oldCols + c;
-                    curr[i] = oldCurr[oi];
-                    prev[i] = oldPrev[oi];
+                    u[i] = oldU[oi];
+                    v[i] = oldV[oi];
                     chars[i] = oldChars[oi];
+                    fatigue[i] = oldFatigue[oi];
                 } else {
-                    curr[i] = 0;
-                    prev[i] = 0;
+                    u[i] = (Math.random() - 0.5) * 0.01;
+                    v[i] = (Math.random() - 0.5) * 0.01;
                     chars[i] = Math.floor(Math.random() * GLYPHS.length);
+                    fatigue[i] = 0;
+                }
+            }
+        }
+
+        // Seed initial excitations
+        seedRandom(3);
+    }
+
+    function seedRandom(count) {
+        for (let s = 0; s < count; s++) {
+            const cr = Math.floor(Math.random() * rows);
+            const cc = Math.floor(Math.random() * cols);
+            const radius = 2 + Math.floor(Math.random() * 2);
+            for (let dr = -radius; dr <= radius; dr++) {
+                for (let dc = -radius; dc <= radius; dc++) {
+                    const r = cr + dr, c = cc + dc;
+                    if (r < 0 || r >= rows || c < 0 || c >= cols) continue;
+                    if (dr * dr + dc * dc > radius * radius) continue;
+                    const i = r * cols + c;
+                    u[i] = 1.0;
                 }
             }
         }
     }
 
-    function tick() {
-        const next = new Float32Array(cols * rows);
+    function lap4(arr, r, c) {
+        const i = r * cols + c;
+        const val = arr[i];
+        let sum = -val * 4;
+        sum += r > 0        ? arr[(r-1)*cols + c] : val;
+        sum += r < rows - 1 ? arr[(r+1)*cols + c] : val;
+        sum += c > 0        ? arr[r*cols + (c-1)] : val;
+        sum += c < cols - 1 ? arr[r*cols + (c+1)] : val;
+        return sum;
+    }
 
+    function step() {
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
                 const i = r * cols + c;
+                const uVal = u[i];
+                const vVal = v[i];
 
-                // Von Neumann neighborhood average (4 neighbors)
-                const up    = r > 0          ? curr[(r-1)*cols + c] : 0;
-                const down  = r < rows - 1   ? curr[(r+1)*cols + c] : 0;
-                const left  = c > 0          ? curr[r*cols + (c-1)] : 0;
-                const right = c < cols - 1   ? curr[r*cols + (c+1)] : 0;
+                // FHN reaction with fatigue raising effective threshold
+                const effThreshold = P.a0 + fatigue[i];
+                const reaction = a1 * uVal * (1 - uVal) * (uVal - effThreshold) - vVal;
+                const lapU = lap4(u, r, c);
 
-                // Discrete wave equation: next = 2*curr - prev + c²*(laplacian)
-                // Simplified: next = avg_neighbors * factor - prev * damping
-                const avg = (up + down + left + right) * 0.5;
-                next[i] = (avg - prev[i]) * DAMPING;
+                const noiseMul = 1 - Math.min(1, Math.abs(uVal) * 2);
+                const noise = (Math.random() - 0.5) * P.noise * noiseMul;
+                nextU[i] = uVal + dt * (P.Du * lapU + reaction) + noise;
+                nextV[i] = vVal + dt * P.eps * (P.b * uVal - vVal);
 
-                // Clamp to prevent runaway
-                if (next[i] > 1) next[i] = 1;
-                if (next[i] < -1) next[i] = -1;
-
-                // When energy changes significantly, update the character
-                const energy = Math.abs(next[i]);
-                if (energy > 0.05) {
-                    const glyphIdx = Math.floor(energy * (GLYPHS.length - 1)) % GLYPHS.length;
-                    chars[i] = glyphIdx;
+                // Accumulate fatigue when firing, slowly decay otherwise
+                if (uVal > 0.5) {
+                    fatigue[i] += P.fatigue * dt;
                 }
+                fatigue[i] *= (1 - P.fatigueDecay);
 
-                // Random perturbations to seed new waves
-                if (Math.random() < PERTURB_CHANCE) {
-                    next[i] += (Math.random() - 0.5) * PERTURB_STRENGTH;
+                // Clamp
+                if (nextU[i] > 1.2) nextU[i] = 1.2;
+                if (nextU[i] < -0.2) nextU[i] = -0.2;
+                if (fatigue[i] > 0.8) fatigue[i] = 0.8;
+            }
+        }
+
+        const tmpU = u; u = nextU; nextU = tmpU;
+        const tmpV = v; v = nextV; nextV = tmpV;
+    }
+
+    function tick() {
+        for (let s = 0; s < STEPS_PER_FRAME; s++) {
+            step();
+        }
+
+        // Random excitations to keep things alive and unpredictable
+        if (Math.random() < 0.01) {
+            const cr = Math.floor(Math.random() * rows);
+            const cc = Math.floor(Math.random() * cols);
+            const radius = 1 + Math.floor(Math.random() * 2);
+            for (let dr = -radius; dr <= radius; dr++) {
+                for (let dc = -radius; dc <= radius; dc++) {
+                    const r = cr + dr, c = cc + dc;
+                    if (r < 0 || r >= rows || c < 0 || c >= cols) continue;
+                    if (dr * dr + dc * dc > radius * radius) continue;
+                    const i = r * cols + c;
+                    if (u[i] < 0.15 && v[i] < 0.1) {
+                        u[i] = 1.0;
+                    }
                 }
             }
         }
 
-        prev = curr;
-        curr = next;
+        // Update characters — low energy cells randomly shuffle, high energy picks by value
+        for (let i = 0; i < cols * rows; i++) {
+            const uVal = Math.abs(u[i]);
+            if (uVal > 0.1) {
+                chars[i] = Math.floor(uVal * (GLYPHS.length - 1)) % GLYPHS.length;
+            } else if (Math.random() < 0.08) {
+                chars[i] = Math.floor(Math.random() * GLYPHS.length);
+            }
+        }
     }
 
     function draw() {
@@ -413,11 +626,10 @@
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
                 const i = r * cols + c;
-                const energy = Math.abs(curr[i]);
-                const curved = energy * energy * energy;
-                const a = BASE_ALPHA + curved * (PEAK_ALPHA - BASE_ALPHA);
+                const uVal = Math.max(0, u[i]);
+                const a = BASE_ALPHA + uVal * (P.peak - BASE_ALPHA);
                 if (a < 0.005) continue;
-                ctx.fillStyle = 'rgba(26, 26, 26, ' + a.toFixed(3) + ')';
+                ctx.fillStyle = 'rgba(' + caR + ',' + caG + ',' + caB + ',' + a.toFixed(3) + ')';
                 ctx.fillText(GLYPHS[chars[i]], c * CHAR_SIZE, r * CHAR_SIZE);
             }
         }
@@ -441,19 +653,85 @@
                 if (dist > radius) continue;
                 const falloff = 1 - dist / (radius + 1);
                 const i = r * cols + c;
-                curr[i] += strength * falloff;
-                if (curr[i] > 1) curr[i] = 1;
-                if (curr[i] < -1) curr[i] = -1;
+                u[i] = Math.max(u[i], strength * falloff);
+                fatigue[i] *= (1 - falloff);
             }
         }
     }
 
     document.addEventListener('mousemove', function(e) {
-        perturb(e.clientX, e.clientY, 0.3, 2);
+        perturb(e.clientX, e.clientY, 0.6, 2);
     });
 
     document.addEventListener('click', function(e) {
-        perturb(e.clientX, e.clientY, 1.0, 4);
+        perturb(e.clientX, e.clientY, 1.0, 5);
+    });
+
+    // Wire up controls
+    const sliders = [
+        { id: 'ca-du',    key: 'Du',    parse: parseFloat },
+        { id: 'ca-a0',    key: 'a0',    parse: parseFloat },
+        { id: 'ca-eps',   key: 'eps',   parse: parseFloat },
+        { id: 'ca-b',     key: 'b',     parse: parseFloat },
+        { id: 'ca-noise', key: 'noise', parse: parseFloat },
+        { id: 'ca-peak',  key: 'peak',  parse: parseFloat },
+        { id: 'ca-fatigue', key: 'fatigue', parse: parseFloat },
+        { id: 'ca-fatigueDecay', key: 'fatigueDecay', parse: parseFloat },
+    ];
+
+    sliders.forEach(function(s) {
+        const input = document.getElementById(s.id);
+        const val = document.getElementById(s.id + '-val');
+        input.addEventListener('input', function() {
+            P[s.key] = s.parse(input.value);
+            val.textContent = input.value;
+        });
+    });
+
+    document.getElementById('ca-reset').addEventListener('click', function() {
+        P = { ...DEFAULTS };
+        sliders.forEach(function(s) {
+            var input = document.getElementById(s.id);
+            var val = document.getElementById(s.id + '-val');
+            input.value = DEFAULTS[s.key];
+            val.textContent = DEFAULTS[s.key];
+        });
+    });
+
+    // Read CA ink color from CSS variables
+    let caR = 26, caG = 26, caB = 26;
+    function updateCAColor() {
+        const s = getComputedStyle(document.documentElement);
+        caR = s.getPropertyValue('--ca-ink-r').trim() || 26;
+        caG = s.getPropertyValue('--ca-ink-g').trim() || 26;
+        caB = s.getPropertyValue('--ca-ink-b').trim() || 26;
+    }
+    updateCAColor();
+
+    // Theme toggle
+    var toggleBtn = document.getElementById('theme-toggle');
+    function updateToggleLabel() {
+        var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        toggleBtn.textContent = isDark ? '\u2600' : '\u263E';
+    }
+    updateToggleLabel();
+
+    toggleBtn.addEventListener('click', function() {
+        var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        var next = isDark ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        updateToggleLabel();
+        updateCAColor();
+    });
+
+    // Also update if OS preference changes and no manual override
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        if (!localStorage.getItem('theme')) {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+            updateToggleLabel();
+            updateCAColor();
+        }
     });
 
     resize();
