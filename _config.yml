@@ -11,16 +11,17 @@ google_maps_javascript_api_key:
 disqus_shortname:
 
 # Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
-logo: /siteicon.png
-description: Musician, Sound Engineer and Programmer.
+logo: /images/favicon.png
+description: AI Safety Researcher and Machine Learning Engineer. Researcher at Arcadia Impact's Alignment Team.
 author:
   name: Alejandro Aristizábal
-  email: alejandro.aristizabal24@gmail.com
   twitter: # twitter username without the @ symbol
 social:
   name: Alejandro Aristizábal
   links:
     - https://github.com/aristizabal95
+    - https://www.linkedin.com/in/aristizabal95
+    - https://scholar.google.com/scholar?q=Alejandro+Aristizabal+MedPerf
 
 # -----
 # Build
@@ -113,5 +114,5 @@ social_icons:
   - Github
 
 _comments:
-  description: Musician, Sound Engineer and Programmer
-  blurb: Alejandro has been actively looking for ways in which he can merge his passion for music and technology.
+  description: AI Safety Researcher and Machine Learning Engineer
+  blurb: Alejandro is an AI Safety Researcher and ML Engineer working on scalable oversight and debate protocols.

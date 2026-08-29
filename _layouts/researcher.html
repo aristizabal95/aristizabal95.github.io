@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
-    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    {% seo %}
     <link rel="icon" type="image/svg+xml" href="{{ site.baseurl }}/images/favicon.svg">
     <link rel="icon" type="image/png" href="{{ site.baseurl }}/images/favicon.png">
     <link rel="shortcut icon" href="{{ site.baseurl }}/images/favicon.ico">
@@ -127,8 +126,14 @@
             color: var(--ink);
         }
 
-        .theme-toggle {
+        .header-icons {
             margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .header-icon-btn {
             background: none;
             border: none;
             cursor: pointer;
@@ -136,11 +141,21 @@
             color: var(--ink-faint);
             padding: 0;
             line-height: 1;
+            width: 1.1rem;
+            height: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
             transition: color 0.15s;
         }
 
-        .theme-toggle:hover {
+        .header-icon-btn:hover {
             color: var(--ink);
+        }
+
+        .settings-wrap {
+            position: relative;
         }
 
         /* ── ABOUT ───────────────── */
@@ -302,30 +317,11 @@
         }
 
         /* ── CA CONTROLS ─────────── */
-        .ca-controls {
-            position: fixed;
-            bottom: 1rem;
-            right: 1rem;
-            z-index: 10;
-            font-family: var(--sans);
-            font-size: 0.78rem;
-        }
-
-        .ca-controls summary {
-            cursor: pointer;
-            color: var(--ink-faint);
-            font-size: 0.75rem;
-            letter-spacing: 0.03em;
-            list-style: none;
-            text-align: right;
-            user-select: none;
-        }
-
-        .ca-controls summary::-webkit-details-marker { display: none; }
-
-        .ca-controls summary:hover { color: var(--ink-mid); }
-
         .ca-controls-panel {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
             margin-top: 0.5rem;
             background: var(--blur-panel);
             backdrop-filter: blur(10px);
@@ -335,6 +331,13 @@
             padding: 0.75rem 1rem;
             width: 240px;
             box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            font-family: var(--sans);
+            font-size: 0.78rem;
+            z-index: 20;
+        }
+
+        .ca-controls-panel.open {
+            display: block;
         }
 
         .ca-controls-panel label {
@@ -391,7 +394,6 @@
                 box-shadow: none;
             }
             .ca-controls-panel { width: 210px; }
-            .ca-controls { bottom: 0.5rem; right: 0.5rem; }
         }
     </style>
     <script>
@@ -415,7 +417,23 @@
             <a href="#writing">Writing</a>
             <a href="#publications">Publications</a>
             <a href="#connect">Socials</a>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+            <span class="header-icons">
+                <span class="settings-wrap">
+                    <button class="header-icon-btn" id="settings-toggle" aria-label="Background settings">&#9881;</button>
+                    <div class="ca-controls-panel" id="ca-panel">
+                        <label>diffusion <input type="range" id="ca-du" min="0.05" max="0.6" step="0.01" value="0.25"> <span class="ca-val" id="ca-du-val">0.25</span></label>
+                        <label>threshold <input type="range" id="ca-a0" min="-0.2" max="0.3" step="0.01" value="-0.05"> <span class="ca-val" id="ca-a0-val">-0.05</span></label>
+                        <label>recovery <input type="range" id="ca-eps" min="0.02" max="0.25" step="0.01" value="0.08"> <span class="ca-val" id="ca-eps-val">0.08</span></label>
+                        <label>coupling <input type="range" id="ca-b" min="0.1" max="1.2" step="0.05" value="0.60"> <span class="ca-val" id="ca-b-val">0.60</span></label>
+                        <label>noise <input type="range" id="ca-noise" min="0" max="0.06" step="0.002" value="0.015"> <span class="ca-val" id="ca-noise-val">0.015</span></label>
+                        <label>intensity <input type="range" id="ca-peak" min="0.05" max="0.6" step="0.01" value="0.20"> <span class="ca-val" id="ca-peak-val">0.20</span></label>
+                        <label>fatigue <input type="range" id="ca-fatigue" min="0" max="0.4" step="0.01" value="0.04"> <span class="ca-val" id="ca-fatigue-val">0.04</span></label>
+                        <label>fat. decay <input type="range" id="ca-fatigueDecay" min="0.001" max="0.02" step="0.001" value="0.006"> <span class="ca-val" id="ca-fatigueDecay-val">0.006</span></label>
+                        <button id="ca-reset">reset defaults</button>
+                    </div>
+                </span>
+                <button class="header-icon-btn" id="theme-toggle" aria-label="Toggle theme"></button>
+            </span>
         </nav>
     </header>
 
@@ -432,21 +450,6 @@
 
 </div>
 
-<details class="ca-controls">
-    <summary>background controls</summary>
-    <div class="ca-controls-panel">
-        <label>diffusion <input type="range" id="ca-du" min="0.05" max="0.6" step="0.01" value="0.25"> <span class="ca-val" id="ca-du-val">0.25</span></label>
-        <label>threshold <input type="range" id="ca-a0" min="-0.2" max="0.3" step="0.01" value="-0.05"> <span class="ca-val" id="ca-a0-val">-0.05</span></label>
-        <label>recovery <input type="range" id="ca-eps" min="0.02" max="0.25" step="0.01" value="0.08"> <span class="ca-val" id="ca-eps-val">0.08</span></label>
-        <label>coupling <input type="range" id="ca-b" min="0.1" max="1.2" step="0.05" value="0.60"> <span class="ca-val" id="ca-b-val">0.60</span></label>
-        <label>noise <input type="range" id="ca-noise" min="0" max="0.06" step="0.002" value="0.015"> <span class="ca-val" id="ca-noise-val">0.015</span></label>
-        <label>intensity <input type="range" id="ca-peak" min="0.05" max="0.6" step="0.01" value="0.20"> <span class="ca-val" id="ca-peak-val">0.20</span></label>
-        <label>fatigue <input type="range" id="ca-fatigue" min="0" max="0.4" step="0.01" value="0.04"> <span class="ca-val" id="ca-fatigue-val">0.04</span></label>
-        <label>fat. decay <input type="range" id="ca-fatigueDecay" min="0.001" max="0.02" step="0.001" value="0.006"> <span class="ca-val" id="ca-fatigueDecay-val">0.006</span></label>
-        <button id="ca-reset">reset defaults</button>
-    </div>
-</details>
-
 <canvas id="ca-bg"></canvas>
 <div class="content-blur"></div>
 
@@ -456,7 +459,7 @@
     const ctx = canvas.getContext('2d');
 
     const isMobile = window.innerWidth <= 540;
-    const CHAR_SIZE = isMobile ? 24 : 14;
+    const CHAR_SIZE = isMobile ? 18 : 14;
     const FONT = CHAR_SIZE + 'px monospace';
     const BASE_ALPHA = 0.04;
     // peak alpha is controlled by P.peak
@@ -713,6 +716,16 @@
         caB = s.getPropertyValue('--ca-ink-b').trim() || 26;
     }
     updateCAColor();
+
+    // Settings toggle
+    var settingsBtn = document.getElementById('settings-toggle');
+    var caPanel = document.getElementById('ca-panel');
+    settingsBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        caPanel.classList.toggle('open');
+    });
+    caPanel.addEventListener('click', function(e) { e.stopPropagation(); });
+    document.addEventListener('click', function() { caPanel.classList.remove('open'); });
 
     // Theme toggle
     var toggleBtn = document.getElementById('theme-toggle');
