@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    <link rel="icon" type="image/png" href="{{ site.baseurl }}/images/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --paper:    #faf9f6;
+            --ink:      #1a1a1a;
+            --ink-mid:  #4a4a4a;
+            --ink-faint:#8a8a8a;
+            --rule:     #d4d0c8;
+            --link:     #2c5282;
+            --link-h:   #1a365d;
+            --accent:   #7c4d28;
+            --serif:    'Libre Baskerville', Georgia, serif;
+            --sans:     'Source Sans 3', 'Source Sans Pro', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--sans);
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        a {
+            color: var(--link);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.15s;
+        }
+
+        a:hover {
+            border-bottom-color: var(--link);
+        }
+
+        /* ── LAYOUT ──────────────── */
+        .page {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem 6rem;
+        }
+
+        /* ── HEADER ──────────────── */
+        .site-header {
+            margin-bottom: 3rem;
+        }
+
+        .site-name {
+            font-family: var(--serif);
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.2;
+            margin-bottom: 0.35rem;
+        }
+
+        .site-role {
+            font-size: 0.95rem;
+            color: var(--ink-mid);
+            letter-spacing: 0.01em;
+        }
+
+        .site-role .dot {
+            color: var(--ink-faint);
+            margin: 0 0.35rem;
+        }
+
+        .site-nav {
+            margin-top: 0.9rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .site-nav a {
+            font-size: 0.88rem;
+            color: var(--ink-mid);
+            border-bottom: none;
+        }
+
+        .site-nav a:hover {
+            color: var(--ink);
+        }
+
+        /* ── ABOUT ───────────────── */
+        .about {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1.75rem;
+            align-items: start;
+            margin-bottom: 2.5rem;
+        }
+
+        .about-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center top;
+            filter: grayscale(8%);
+        }
+
+        .about-bio p {
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: var(--ink-mid);
+            margin-bottom: 0.75rem;
+        }
+
+        .about-bio p:last-child { margin-bottom: 0; }
+
+        .about-bio strong { color: var(--ink); font-weight: 600; }
+        .about-bio em { color: var(--ink); }
+
+        /* ── SECTIONS ────────────── */
+        .divider {
+            border: none;
+            border-top: 1px solid var(--rule);
+            margin: 2.5rem 0;
+        }
+
+        .section-heading {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 1.25rem;
+        }
+
+        /* ── WRITING LIST ────────── */
+        .writing-list {
+            list-style: none;
+        }
+
+        .writing-list li {
+            margin-bottom: 0.7rem;
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .writing-date {
+            display: inline-block;
+            width: 5.5rem;
+            color: var(--ink-faint);
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .writing-karma {
+            color: var(--ink-faint);
+            font-size: 0.8rem;
+            margin-left: 0.3rem;
+        }
+
+        /* ── PUBLICATIONS ────────── */
+        .pub-list {
+            list-style: none;
+        }
+
+        .pub-list li {
+            margin-bottom: 1rem;
+            font-size: 0.92rem;
+            line-height: 1.55;
+        }
+
+        .pub-year {
+            display: inline-block;
+            width: 3rem;
+            color: var(--ink-faint);
+            font-size: 0.85rem;
+            vertical-align: top;
+            flex-shrink: 0;
+        }
+
+        .pub-entry {
+            display: inline;
+        }
+
+        .pub-title-text {
+            color: var(--ink);
+        }
+
+        .pub-venue-text {
+            color: var(--ink-faint);
+            font-style: italic;
+        }
+
+        .pub-doi {
+            font-size: 0.8rem;
+        }
+
+        /* ── FOOTER / CONNECT ────── */
+        .connect {
+            font-size: 0.92rem;
+            color: var(--ink-mid);
+        }
+
+        .connect-email {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 0.95rem;
+            display: block;
+            margin-bottom: 0.6rem;
+        }
+
+        .connect-links {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .connect-links a {
+            color: var(--ink-faint);
+            font-size: 0.88rem;
+        }
+
+        .connect-links a:hover {
+            color: var(--link);
+        }
+
+        /* ── CELLULAR AUTOMATA BG ── */
+        #ca-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .page {
+            position: relative;
+            z-index: 1;
+        }
+
+        .content-blur {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 760px;
+            height: 100%;
+            background: rgba(250, 249, 246, 0.55);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            z-index: 0;
+            pointer-events: none;
+            border-left: 1px solid rgba(0, 0, 0, 0.04);
+            border-right: 1px solid rgba(0, 0, 0, 0.04);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.03);
+        }
+
+        @media (max-width: 540px) {
+            .content-blur { width: 100%; }
+        }
+
+        /* ── RESPONSIVE ──────────── */
+        @media (max-width: 540px) {
+            .page { padding: 2.5rem 1.25rem 4rem; }
+            .about { grid-template-columns: 1fr; justify-items: start; gap: 1.25rem; }
+            .about-photo { width: 90px; height: 90px; }
+            .writing-date { width: 4.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page">
+
+    <header class="site-header">
+        <h1 class="site-name">Alejandro Aristizábal</h1>
+        <p class="site-role">AI Safety Researcher<span class="dot">&middot;</span>Machine Learning Engineer</p>
+        <nav class="site-nav">
+            <a href="#about">About</a>
+            <a href="#writing">Writing</a>
+            <a href="#publications">Publications</a>
+            <a href="#connect">Contact</a>
+        </nav>
+    </header>
+
+    {{ content }}
+
+    <footer class="connect" id="connect">
+        <a href="mailto:alejandro.aristizabal24@gmail.com" class="connect-email">alejandro.aristizabal24@gmail.com</a>
+        <div class="connect-links">
+            <a href="https://www.linkedin.com/in/aristizabal95/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/aristizabal95" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://scholar.google.com/scholar?q=Alejandro+Aristizabal+MedPerf" target="_blank" rel="noopener">Google Scholar</a>
+            <a href="https://www.lesswrong.com/users/alejandro-aristizabal" target="_blank" rel="noopener">LessWrong</a>
+        </div>
+    </footer>
+
+</div>
+
+<canvas id="ca-bg"></canvas>
+<div class="content-blur"></div>
+
+<script>
+(function() {
+    const canvas = document.getElementById('ca-bg');
+    const ctx = canvas.getContext('2d');
+
+    const CHAR_SIZE = 14;
+    const FONT = CHAR_SIZE + 'px monospace';
+    const BASE_ALPHA = 0.04;
+    const PEAK_ALPHA = 0.22;
+    const DAMPING = 0.996;
+    const TICK_MS = 80;
+    const PERTURB_CHANCE = 0.0003;
+    const PERTURB_STRENGTH = 0.8;
+
+    const GLYPHS = '0123456789ABCDEFabcdef+-=<>{}[]|/\\~:.;!?@#$%^&*';
+
+    let cols, rows, chars;
+    // Wave equation: two buffers for current and previous energy
+    let curr, prev;
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const newCols = Math.ceil(canvas.width / CHAR_SIZE) + 1;
+        const newRows = Math.ceil(canvas.height / CHAR_SIZE) + 1;
+
+        const oldCurr = curr;
+        const oldPrev = prev;
+        const oldChars = chars;
+        const oldCols = cols || 0;
+        const oldRows = rows || 0;
+
+        cols = newCols;
+        rows = newRows;
+        const size = cols * rows;
+
+        curr = new Float32Array(size);
+        prev = new Float32Array(size);
+        chars = new Uint8Array(size);
+
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const i = r * cols + c;
+                if (oldCurr && r < oldRows && c < oldCols) {
+                    const oi = r * oldCols + c;
+                    curr[i] = oldCurr[oi];
+                    prev[i] = oldPrev[oi];
+                    chars[i] = oldChars[oi];
+                } else {
+                    curr[i] = 0;
+                    prev[i] = 0;
+                    chars[i] = Math.floor(Math.random() * GLYPHS.length);
+                }
+            }
+        }
+    }
+
+    function tick() {
+        const next = new Float32Array(cols * rows);
+
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const i = r * cols + c;
+
+                // Von Neumann neighborhood average (4 neighbors)
+                const up    = r > 0          ? curr[(r-1)*cols + c] : 0;
+                const down  = r < rows - 1   ? curr[(r+1)*cols + c] : 0;
+                const left  = c > 0          ? curr[r*cols + (c-1)] : 0;
+                const right = c < cols - 1   ? curr[r*cols + (c+1)] : 0;
+
+                // Discrete wave equation: next = 2*curr - prev + c²*(laplacian)
+                // Simplified: next = avg_neighbors * factor - prev * damping
+                const avg = (up + down + left + right) * 0.5;
+                next[i] = (avg - prev[i]) * DAMPING;
+
+                // Clamp to prevent runaway
+                if (next[i] > 1) next[i] = 1;
+                if (next[i] < -1) next[i] = -1;
+
+                // When energy changes significantly, update the character
+                const energy = Math.abs(next[i]);
+                if (energy > 0.05) {
+                    const glyphIdx = Math.floor(energy * (GLYPHS.length - 1)) % GLYPHS.length;
+                    chars[i] = glyphIdx;
+                }
+
+                // Random perturbations to seed new waves
+                if (Math.random() < PERTURB_CHANCE) {
+                    next[i] += (Math.random() - 0.5) * PERTURB_STRENGTH;
+                }
+            }
+        }
+
+        prev = curr;
+        curr = next;
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = FONT;
+        ctx.textBaseline = 'top';
+
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const i = r * cols + c;
+                const energy = Math.abs(curr[i]);
+                const curved = energy * energy * energy;
+                const a = BASE_ALPHA + curved * (PEAK_ALPHA - BASE_ALPHA);
+                if (a < 0.005) continue;
+                ctx.fillStyle = 'rgba(26, 26, 26, ' + a.toFixed(3) + ')';
+                ctx.fillText(GLYPHS[chars[i]], c * CHAR_SIZE, r * CHAR_SIZE);
+            }
+        }
+    }
+
+    function loop() {
+        tick();
+        draw();
+        setTimeout(loop, TICK_MS);
+    }
+
+    function perturb(x, y, strength, radius) {
+        const cc = Math.floor(x / CHAR_SIZE);
+        const cr = Math.floor(y / CHAR_SIZE);
+        for (let dr = -radius; dr <= radius; dr++) {
+            for (let dc = -radius; dc <= radius; dc++) {
+                const r = cr + dr;
+                const c = cc + dc;
+                if (r < 0 || r >= rows || c < 0 || c >= cols) continue;
+                const dist = Math.sqrt(dr * dr + dc * dc);
+                if (dist > radius) continue;
+                const falloff = 1 - dist / (radius + 1);
+                const i = r * cols + c;
+                curr[i] += strength * falloff;
+                if (curr[i] > 1) curr[i] = 1;
+                if (curr[i] < -1) curr[i] = -1;
+            }
+        }
+    }
+
+    document.addEventListener('mousemove', function(e) {
+        perturb(e.clientX, e.clientY, 0.3, 2);
+    });
+
+    document.addEventListener('click', function(e) {
+        perturb(e.clientX, e.clientY, 1.0, 4);
+    });
+
+    resize();
+    window.addEventListener('resize', resize);
+    loop();
+})();
+</script>
+
+</body>
+</html>
