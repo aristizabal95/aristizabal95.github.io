@@ -388,8 +388,8 @@
             .site-nav { flex-wrap: wrap; gap: 1rem; }
             .content-blur {
                 background: none;
-                backdrop-filter: blur(1px);
-                -webkit-backdrop-filter: blur(1px);
+                backdrop-filter: blur(2px);
+                -webkit-backdrop-filter: blur(2px);
                 border: none;
                 box-shadow: none;
             }
@@ -459,7 +459,7 @@
     const ctx = canvas.getContext('2d');
 
     const isMobile = window.innerWidth <= 540;
-    const CHAR_SIZE = isMobile ? 18 : 14;
+    const CHAR_SIZE = isMobile ? 9 : 14;
     const FONT = CHAR_SIZE + 'px monospace';
     const BASE_ALPHA = 0.04;
     // peak alpha is controlled by P.peak
